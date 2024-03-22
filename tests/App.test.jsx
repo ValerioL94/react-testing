@@ -1,22 +1,25 @@
+import { expect, test, vi } from 'vitest';
+import UserEvent from '@testing-library/user-event';
+import { Input } from '../src/App';
 import App from '../src/App';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
-describe('App component', () => {
-  it('renders magnificent monkeys', () => {
-    // since screen does not have the container property, we'll destructure render to obtain a container for this test
-    const { container } = render(<App />);
-    expect(container).toMatchSnapshot();
-  });
+test('input value is updated correctly', async () => {
+  render(<App />);
 
-  it('renders radical rhinos after button click', async () => {
-    const user = userEvent.setup();
+  const input = screen.getByRole('textbox');
+  await UserEvent.type(input, 'React');
 
-    render(<App />);
-    const button = screen.getByRole('button', { name: 'Click Me' });
+  expect(input.value).toBe('React');
+});
 
-    await user.click(button);
+test('call the callback every time input value is changed', async () => {
+  const handleChange = vi.fn();
 
-    expect(screen.getByRole('heading', { name: 'Radical Rhinos' }));
-  });
+  render(<Input handleChange={handleChange} inputValue="" />);
+
+  const input = screen.getByRole('textbox');
+  await UserEvent.type(input, 'React');
+
+  expect(handleChange).toHaveBeenCalledTimes(5);
 });

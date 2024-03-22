@@ -1,22 +1,20 @@
-import './App.css';
+/* eslint-disable react/prop-types */
+import React from 'react';
 
-import React, { useState } from 'react';
+export function Input(props) {
+  const { handleChange, inputValue } = props;
+  return <input onChange={handleChange} value={inputValue} />;
+}
+export default function App() {
+  const [inputValue, setInputValue] = React.useState('');
 
-const App = () => {
-  const [heading, setHeading] = useState('Magnificent Monkeys');
-
-  const clickHandler = () => {
-    setHeading('Radical Rhinos');
+  const handleChange = (event) => {
+    setInputValue(event.target.value);
   };
 
   return (
-    <>
-      <button type="button" onClick={clickHandler}>
-        Click Me
-      </button>
-      <h1>{heading}</h1>
-    </>
+    <div>
+      <Input handleChange={handleChange} inputValue={inputValue} />
+    </div>
   );
-};
-
-export default App;
+}
