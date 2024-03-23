@@ -2,7 +2,6 @@ import UserEvent from '@testing-library/user-event';
 import { Input } from '../src/App';
 import App from '../src/App';
 import { render, screen } from '@testing-library/react';
-import { expect, test, vi } from 'vitest';
 
 test('input value is updated correctly', async () => {
   render(<App />);
